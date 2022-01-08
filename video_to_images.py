@@ -37,17 +37,15 @@ def main(args):
     cam = cv2.VideoCapture(args.video)
     try:
 
-        # creating a folder named data
-        if not os.path.exists(args.dataset_dir):
-            os.makedirs(args.dataset_dir)
-
+        # creating a folder named dataset
+        dataset_folder = os.path.join(args.dataset_dir, args.dataset)
+        if not os.path.exists(dataset_folder):
+            os.makedirs(dataset_folder)
+        save_images(cam, dataset_folder, args.prefix)
+        
     # if not created then raise error
     except OSError:
-        print('Error: Creating directory of data')
-
-    # frame
-    currentframe = 0
-    save_images(cam, args.dataset_dir, args.prefix)
+        print('Error: Creating directory', dataset_folder)
 
 
 if __name__ == "__main__":
@@ -55,6 +53,8 @@ if __name__ == "__main__":
         description='Script to sample a video into frames')
     parser.add_argument('--video', metavar='path', required=True,
                         help='the path to input video')
+    parser.add_argument('--dataset', metavar='path', required=True,
+                        help='the name of the image dataset to be created')
     parser.add_argument('--dataset_dir', default="datasets", metavar='path', required=False,
                         help='path to dataset')
     parser.add_argument('--prefix', default='frame', metavar='str', required=False,
