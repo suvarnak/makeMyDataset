@@ -1,0 +1,7 @@
+datasets/*
+input-videos/*
+
+# following will ensure that  keep files are not ignored
+!.gitkeep
+
+
